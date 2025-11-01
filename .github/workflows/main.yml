@@ -1,9 +1,9 @@
 name: deploy ecs demo
 
 on:
-  push:
-    branches:
-      - master
+#   push:
+#     branches:
+#       - master
   workflow_dispatch:
 
 env:
@@ -57,7 +57,6 @@ jobs:
             run: |
               aws ecs describe-task-definition --task-definition ${{ env.TASK_DEFINITION }} \
                 --query 'taskDefinition | {family: family, taskRoleArn: taskRoleArn, executionRoleArn: executionRoleArn, networkMode: networkMode, containerDefinitions: containerDefinitions, volumes: volumes, placementConstraints: placementConstraints, requiresCompatibilities: requiresCompatibilities, cpu: cpu, memory: memory, runtimePlatform: runtimePlatform, tags: tags}' > task-def.json
-              cat task-def.json
 
           - name: Deploy to TASK DEFINITION
             uses: aws-actions/amazon-ecs-render-task-definition@v1

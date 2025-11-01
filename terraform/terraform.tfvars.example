@@ -1,0 +1,19 @@
+#info del proyecto
+project_name = "ecs-demo"
+environment  = "development"
+
+# Tags
+tags = {
+  "Project"   = "Ecs-demo"
+  "ManagedBy" = "Terraform"
+  "Owner"     = "Roxs Development"
+
+}
+
+use_existing_vpc            = true
+existing_vpc_id             = "vpc-xxxxxxxxxxxxxxx"
+existing_private_subnet_ids = ["subnet-xxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxx"]
+existing_public_subnet_ids  = ["subnet-xxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxx"]
+
+min_capacity = 2
+max_capacity = 4
