@@ -11,7 +11,7 @@ env:
     ECR_REPOSITORY: ecs-demo
     ECS_CLUSTER: ecs-demo-cluster
     ECS_SERVICE: ecs-demo-service
-    CONTAINER_NAME: ecs-demo
+    CONTAINER_NAME: ecs-demo-task
 
 jobs:
     deploy:
