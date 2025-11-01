@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Items - ECS Demo{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-list"></i> Gestión de Items</h1>
+    <p class="subtitle">Administra tus items almacenados en DynamoDB</p>
+</div>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-database"></i>
+        </div>
+        <div class="stat-content">
+            <h3>{{ items|length }}</h3>
+            <p>Total Items</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon active">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stat-content">
+            <h3>{{ items|selectattr('status', 'equalto', 'active')|list|length }}</h3>
+            <p>Activos</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon inactive">
+            <i class="fas fa-times-circle"></i>
+        </div>
+        <div class="stat-content">
+            <h3>{{ items|selectattr('status', 'equalto', 'inactive')|list|length }}</h3>
+            <p>Inactivos</p>
+        </div>
+    </div>
+</div>
+
+{% if items %}
+<div class="items-grid">
+    {% for item in items %}
+    <div class="item-card">
+        <div class="item-header">
+            <h3>{{ item.name }}</h3>
+            <span class="badge badge-{{ item.status }}">
+                <i class="fas fa-circle"></i> {{ item.status }}
+            </span>
+        </div>
+        <div class="item-body">
+            {% if item.description %}
+            <p class="item-description">{{ item.description }}</p>
+            {% else %}
+            <p class="item-description text-muted">Sin descripción</p>
+            {% endif %}
+            <div class="item-meta">
+                <small>
+                    <i class="fas fa-clock"></i>
+                    Creado: {{ item.created_at[:10] if item.created_at else 'N/A' }}
+                </small>
+            </div>
+        </div>
+        <div class="item-actions">
+            <a href="{{ url_for('edit', item_id=item.id) }}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <form action="{{ url_for('delete', item_id=item.id) }}" method="POST" style="display: inline;" 
+                  onsubmit="return confirm('¿Estás seguro de eliminar este item?');">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-inbox"></i>
+    <h2>No hay items</h2>
+    <p>Comienza creando tu primer item</p>
+    <a href="{{ url_for('create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Crear Primer Item
+    </a>
+</div>
+{% endif %}
+{% endblock %}

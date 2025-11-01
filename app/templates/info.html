@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Información del Sistema - ECS Demo{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-info-circle"></i> Información del Sistema</h1>
+    <p class="subtitle">Detalles del contenedor y configuración</p>
+</div>
+
+<div class="info-grid">
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-server"></i>
+        </div>
+        <div class="info-content">
+            <h3>Container ID</h3>
+            <p>{{ info.container_id }}</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-globe"></i>
+        </div>
+        <div class="info-content">
+            <h3>AWS Region</h3>
+            <p>{{ info.aws_region }}</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-database"></i>
+        </div>
+        <div class="info-content">
+            <h3>DynamoDB Table</h3>
+            <p>{{ info.dynamodb_table }}</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-cog"></i>
+        </div>
+        <div class="info-content">
+            <h3>Environment</h3>
+            <p>{{ info.environment }}</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="info-content">
+            <h3>Timestamp</h3>
+            <p>{{ info.timestamp[:19] }}</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon">
+            <i class="fas fa-heartbeat"></i>
+        </div>
+        <div class="info-content">
+            <h3>Status</h3>
+            <p class="text-success"><i class="fas fa-check-circle"></i> Healthy</p>
+        </div>
+    </div>
+</div>
+
+<div class="architecture-section">
+    <h2><i class="fas fa-sitemap"></i> Arquitectura</h2>
+    <div class="architecture-card">
+        <div class="architecture-item">
+            <i class="fas fa-cloud"></i>
+            <h4>AWS Cloud</h4>
+            <p>Infraestructura en la nube</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+            <i class="fas fa-balance-scale"></i>
+            <h4>Application Load Balancer</h4>
+            <p>Distribución de tráfico</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+            <i class="fas fa-cube"></i>
+            <h4>ECS Fargate</h4>
+            <p>Contenedores serverless</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+            <i class="fas fa-database"></i>
+            <h4>DynamoDB</h4>
+            <p>Base de datos NoSQL</p>
+        </div>
+    </div>
+</div>
+
+<div class="api-section">
+    <h2><i class="fas fa-code"></i> API Endpoints</h2>
+    <div class="endpoint-list">
+        <div class="endpoint-item">
+            <span class="method method-get">GET</span>
+            <code>/api/items</code>
+            <span class="endpoint-desc">Listar todos los items</span>
+        </div>
+        <div class="endpoint-item">
+            <span class="method method-get">GET</span>
+            <code>/api/items/{id}</code>
+            <span class="endpoint-desc">Obtener un item específico</span>
+        </div>
+        <div class="endpoint-item">
+            <span class="method method-post">POST</span>
+            <code>/api/items</code>
+            <span class="endpoint-desc">Crear nuevo item</span>
+        </div>
+        <div class="endpoint-item">
+            <span class="method method-put">PUT</span>
+            <code>/api/items/{id}</code>
+            <span class="endpoint-desc">Actualizar item</span>
+        </div>
+        <div class="endpoint-item">
+            <span class="method method-delete">DELETE</span>
+            <code>/api/items/{id}</code>
+            <span class="endpoint-desc">Eliminar item</span>
+        </div>
+        <div class="endpoint-item">
+            <span class="method method-get">GET</span>
+            <code>/health</code>
+            <span class="endpoint-desc">Health check</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
