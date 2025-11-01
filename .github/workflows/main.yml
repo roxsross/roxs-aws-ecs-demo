@@ -56,13 +56,13 @@ jobs:
               aws ecs describe-task-definition --task-definition ${{ env.TASK_DEFINITION }} --query taskDefinition > task-def.json
               cat task-def.json
 
-        #   - name: Deploy to TASK DEFINITION
-        #     uses: aws-actions/amazon-ecs-render-task-definition@v1
-        #     id: task-def
-        #     with:
-        #       task-definition: task-def.json
-        #       container-name: ${{ env.CONTAINER_NAME }}
-        #       image: ${{ steps.build-image.outputs.image }}
+          - name: Deploy to TASK DEFINITION
+            uses: aws-actions/amazon-ecs-render-task-definition@v1
+            id: task-def
+            with:
+              task-definition: task-def.json
+              container-name: ${{ env.CONTAINER_NAME }}
+              image: ${{ steps.build-image.outputs.image }}
 
         #   - name: Update ECS service
         #     uses: aws-actions/amazon-ecs-deploy-task-definition@v2
