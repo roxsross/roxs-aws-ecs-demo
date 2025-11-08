@@ -68,10 +68,10 @@ jobs:
               id: validate
               run: terraform validate
 
-            # - name: Terraform Plan
-            #   if: ${{ github.event.inputs.actions == 'plan' }}
-            #   working-directory: ./terraform
-            #   run: terraform plan
+            - name: Terraform Plan
+              id: plan
+              if: ${{ github.event.inputs.actions != 'destroy' }}
+              run: terraform plan
 
             # - name: Terraform Apply
             #   if: ${{ github.event.inputs.actions == 'apply' }}

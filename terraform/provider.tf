@@ -20,7 +20,7 @@ terraform {
 provider "aws" {
   region = var.aws_region
 }
-#aws configure indican aws secret id y aws secret key
+##aws configure indican aws secret id y aws secret key
 # export AWS_ACCESS_KEY_ID="your_access_key_id"
 # export AWS_SECRET_ACCESS_KEY="your_secret_access_key"
 #aws get-caller-identity para verificar que las credenciales son correctas
