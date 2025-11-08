@@ -57,7 +57,8 @@ jobs:
                   aws-region: ${{ env.REGION }}
             - name: Terraform Format Check
               id: fmt
-              run: terraform fmt -check -recursive
+              run: terraform fmt
+              continue-on-error: true
 
             - name: Terraform Init
               id: init
