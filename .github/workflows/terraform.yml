@@ -27,11 +27,19 @@ on:
                 required: false
                 default: ''
                 type: string
-
+env:
+    REGION: us-east-1
+    TF_VERSION: 1.5.6
+    TF_VAR_existing_vpc_id : ${{ secrets.TF_VAR_EXISTING_VPC_ID }}
+    TF_VAR_existing_private_subnet_ids : ${{ secrets.TF_VAR_EXISTING_PRIVATE_SUBNET_IDS }}
+    TF_VAR_existing_public_subnet_ids : ${{ secrets.TF_VAR_EXISTING_PUBLIC_SUBNET_IDS }}
 jobs:
     terraform:
         name: 'Terraform Jobs'
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: terraform
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -39,11 +47,25 @@ jobs:
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3
               with:
-                  terraform_version: 1.5.6
+                  terraform_version: ${{ env.TF_VERSION }}
 
-            # - name: Terraform Init
-            #   working-directory: ./terraform
-            #   run: terraform init
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v2
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ env.REGION }}
+            - name: Terraform Format Check
+              id: fmt
+              run: terraform fmt -check -recursive
+
+            - name: Terraform Init
+              id: init
+              run: terraform init
+
+            - name: Terraform Validate
+              id: validate
+              run: terraform validate
 
             # - name: Terraform Plan
             #   if: ${{ github.event.inputs.actions == 'plan' }}
