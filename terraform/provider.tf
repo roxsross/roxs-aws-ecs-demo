@@ -9,12 +9,12 @@ terraform {
   }
 
   # Backend remoto en S3 
-  # backend "s3" {
-  #   bucket         = "iac-tf-bucket-s3"
-  #   key            = "ecs-demo/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket         = "iac-tf-bucket-s3"
+    key            = "ecs-demo/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+  }
 }
 
 provider "aws" {

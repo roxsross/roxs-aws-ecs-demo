@@ -1,0 +1,65 @@
+name: Terra Infra
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - 'terraform/**'
+    pull_request:
+        branches:
+            - master
+        paths:
+            - 'terraform/**'
+    workflow_dispatch: #disparar el Workflow manual
+        inputs:
+            actions:
+                description: 'Select action to perform'
+                required: true
+                default: 'plan'
+                type: choice
+                options:
+                    - plan
+                    - apply
+                    - destroy
+            confirm_apply:
+                description: 'Type "DESTROY" to confirm destroy action'
+                required: false
+                default: ''
+                type: string
+
+jobs:
+    terraform:
+        name: 'Terraform Jobs'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v3
+              with:
+                  terraform_version: 1.5.6
+
+            # - name: Terraform Init
+            #   working-directory: ./terraform
+            #   run: terraform init
+
+            # - name: Terraform Plan
+            #   if: ${{ github.event.inputs.actions == 'plan' }}
+            #   working-directory: ./terraform
+            #   run: terraform plan
+
+            # - name: Terraform Apply
+            #   if: ${{ github.event.inputs.actions == 'apply' }}
+            #   working-directory: ./terraform
+            #   run: terraform apply -auto-approve
+
+            # - name: Terraform Destroy
+            #   if: ${{ github.event.inputs.actions == 'destroy' && github.event.inputs.confirm_apply == 'DESTROY' }}
+            #   working-directory: ./terraform
+            #   run: terraform destroy -auto-approve
+
+            # - name: Cancel Destroy
+            #   if: ${{ github.event.inputs.actions == 'destroy' && github.event.inputs.confirm_apply != 'DESTROY' }}
+            #   run: echo "Destroy action not confirmed. Skipping destroy."
