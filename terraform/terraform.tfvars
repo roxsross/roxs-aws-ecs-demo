@@ -30,7 +30,7 @@ max_capacity = 4
 #
 # Ver: terraform/README-CICD.md para más detalles
 # ========================================
-#
+##
 use_existing_vpc            = true
 # existing_vpc_id             = "vpc-xxxxx"  # ← Configurar en GitHub Secrets
 # existing_private_subnet_ids = ["subnet-xxxxx", "subnet-yyyyy"]

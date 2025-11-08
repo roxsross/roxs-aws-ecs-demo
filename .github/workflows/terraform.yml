@@ -73,15 +73,29 @@ jobs:
               if: ${{ github.event.inputs.actions != 'destroy' }}
               run: terraform plan
 
-            # - name: Terraform Apply
-            #   if: ${{ github.event.inputs.actions == 'apply' }}
-            #   working-directory: ./terraform
-            #   run: terraform apply -auto-approve
+            - name: Terraform Apply
+              id: apply
+            #   if: ${{ github.event.inputs.actions != 'destroy' }}
+              if: |
+                github.ref == 'refs/heads/master' &&
+                github.event_name == 'push' ||
+                (github.event_name == 'workflow_dispatch' && github.event.inputs.actions == 'apply')
+              run: terraform apply -auto-approve
 
-            # - name: Terraform Destroy
-            #   if: ${{ github.event.inputs.actions == 'destroy' && github.event.inputs.confirm_apply == 'DESTROY' }}
-            #   working-directory: ./terraform
-            #   run: terraform destroy -auto-approve
+            - name: Terraform Destroy
+              id: destroy
+              if: |
+                github.event.inputs.actions == 'destroy' &&
+                github.event.inputs.confirm_apply == 'DESTROY'
+              run: | 
+                terraform init
+                echo "Warning: You are about to destroy all Terraform-managed infrastructure!"
+                echo "This action is irreversible. Proceeding with destroy..."
+                echo "----------------------------------------"
+                echo "Region: ${{ env.REGION }}"
+                echo "El Culpable: ${{ github.actor }}"
+                terraform destroy -auto-approve
+                echo "Infrastructure destroy completed."
 
             # - name: Cancel Destroy
             #   if: ${{ github.event.inputs.actions == 'destroy' && github.event.inputs.confirm_apply != 'DESTROY' }}
