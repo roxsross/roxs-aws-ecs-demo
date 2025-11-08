@@ -42,7 +42,8 @@ Thumbs.db
 .terraform/
 *.tfstate
 *.tfstate.*
-*.tfvars
+terraform.tfvars.local       # Archivos locales con datos sensibles
+*.auto.tfvars          # Auto-loaded vars (pueden contener secrets)
 .terraform.lock.hcl
 crash.log
 override.tf
