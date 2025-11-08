@@ -42,6 +42,7 @@ Thumbs.db
 .terraform/
 *.tfstate
 *.tfstate.*
+*.tfstate.backup.*     # Backups de estado local
 terraform.tfvars.local       # Archivos locales con datos sensibles
 *.auto.tfvars          # Auto-loaded vars (pueden contener secrets)
 .terraform.lock.hcl
