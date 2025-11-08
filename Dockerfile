@@ -1,7 +1,7 @@
 # Dockerfile para la aplicación ECS Demo con Flask
 FROM python:3.13-alpine
 
-# Establecer directorio de trabajo
+# # Establecer directorio de trabajo
 WORKDIR /app
 
 # Copiar requirements
